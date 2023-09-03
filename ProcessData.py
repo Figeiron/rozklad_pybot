@@ -35,7 +35,8 @@ def process_data(local_filename, group_name, sheet_name):
 
     if next_column_name:
         selected_columns.append(next_column_name)
-    df = df[selected_columns].dropna(how='all')
+
+    df = df[selected_columns].fillna('-')
     df = df.drop(df.index[df.index % 2 != 0])
     df = df.apply(lambda x: x.str.ljust(30, "-") if x.name == group_name else x)
     result = df.to_string(index=False, header=False)
